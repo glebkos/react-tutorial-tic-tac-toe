@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/react-tutorial-tic-tac-toe/static/css/main.9c5c5444.css",
+    "main.js": "/react-tutorial-tic-tac-toe/static/js/main.0c7a57b8.js",
+    "index.html": "/react-tutorial-tic-tac-toe/index.html",
+    "main.9c5c5444.css.map": "/react-tutorial-tic-tac-toe/static/css/main.9c5c5444.css.map",
+    "main.0c7a57b8.js.map": "/react-tutorial-tic-tac-toe/static/js/main.0c7a57b8.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9c5c5444.css",
+    "static/js/main.0c7a57b8.js"
+  ]
+}
