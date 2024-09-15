@@ -1,27 +1,28 @@
 import {useState} from "react";
+import {players, squaresArray} from './App.types.ts';
 
-function Square(props){
+function Square(props): JSX.Element{
   const {value, onSquareClick} = props;
   return <button className="square" onClick={onSquareClick}>{value}</button>;
 }
 
-function Board(props) {
+function Board(props): JSX.Element {
   const {xIsNext, squares, onPlay} = props;
 
-  function handleClick(i){
+  function handleClick(i): void {
     if (squares[i] || calculateWinner(squares)){
       return;
     }
-    const nextSquares = squares.slice();
+    const nextSquares: squaresArray = squares.slice();
     nextSquares[i] = xIsNext ? 'X' : 'O';
     onPlay(nextSquares);
   }
 
-  const winner = calculateWinner(squares);
-  let status = winner ? "Winner: " + winner : "Next player: " + (xIsNext ? "X" : "O");
+  const winner: players = calculateWinner(squares);
+  let status: string = winner ? "Winner: " + winner : "Next player: " + (xIsNext ? "X" : "O");
 
 
-  return <>
+  return (<>
     <div className="status">{status}</div>
     <div className="board-row">
       <Square value={squares[0]} onSquareClick={() => handleClick(0)}/>
@@ -38,31 +39,32 @@ function Board(props) {
       <Square value={squares[7]} onSquareClick={() => handleClick(7)}/>
       <Square value={squares[8]} onSquareClick={() => handleClick(8)}/>
     </div>
-  </>;
+  </>);
 }
 
-export default function Game(){
-  const [currentMove, setCurrentMove] = useState(0);
-  const xIsNext = currentMove % 2 === 0;
-  const [history, setHistory] = useState([Array(9).fill(null)]);
-  const currentSquares = history[currentMove];
+export default function Game(): JSX.Element {
+  const [currentMove, setCurrentMove] = useState<number>(0);
+  const xIsNext: boolean = currentMove % 2 === 0;
+  const [history, setHistory] = useState<squaresArray[]>([Array(9).fill(null)]);
+  const currentSquares: squaresArray = history[currentMove];
 
-  function handlePlay(nextSquares){
-    const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
+  function handlePlay(nextSquares: squaresArray){
+    const nextHistory: squaresArray[] = [...history.slice(0, currentMove + 1), nextSquares];
     setHistory(nextHistory);
     setCurrentMove(nextHistory.length - 1);
   }
 
-  function jumpTo(nextMove){
+  function jumpTo(nextMove): void{
     setCurrentMove(nextMove);
   }
 
   const moves = history.map((squares, move) => {
     let description = move > 0? 'Go to move #' + move : 'Go to game start';
 
-    return <li key={move}>
+    return (
+    <li key={move}>
       <button onClick={() => jumpTo(move)}>{description}</button>
-    </li>
+    </li>)
   });
 
   return (
@@ -77,7 +79,7 @@ export default function Game(){
   )
 }
 
-function calculateWinner(squares){
+function calculateWinner(squares: squaresArray): players | null{
   const lines=[
     [0, 1, 2],
     [3, 4, 5],
