@@ -1,9 +1,20 @@
-import {useState} from "react";
+import React, {useState} from 'react';
+import PropTypes from 'prop-types';
 import {players, squaresArray} from './App.types.ts';
 
+Square.propTypes = {
+  value: PropTypes.string,
+  onSquareClick: PropTypes.func,
+}
 function Square(props): JSX.Element{
   const {value, onSquareClick} = props;
   return <button className="square" onClick={onSquareClick}>{value}</button>;
+}
+
+Board.propTypes = {
+  xIsNext: PropTypes.bool,
+  squares: PropTypes.array,
+  onPlay: PropTypes.func,
 }
 
 function Board(props): JSX.Element {
@@ -19,7 +30,7 @@ function Board(props): JSX.Element {
   }
 
   const winner: players = calculateWinner(squares);
-  let status: string = winner ? "Winner: " + winner : "Next player: " + (xIsNext ? "X" : "O");
+  const status: string = winner ? 'Winner: ' + winner : 'Next player: ' + (xIsNext ? 'X' : 'O');
 
 
   return (<>
@@ -44,7 +55,7 @@ function Board(props): JSX.Element {
 
 export default function Game(): JSX.Element {
   const [currentMove, setCurrentMove] = useState<number>(0);
-  const xIsNext: boolean = currentMove % 2 === 0;
+  const xIsNext: boolean = currentMove% 2 === 0;
   const [history, setHistory] = useState<squaresArray[]>([Array(9).fill(null)]);
   const currentSquares: squaresArray = history[currentMove];
 
@@ -59,7 +70,7 @@ export default function Game(): JSX.Element {
   }
 
   const moves = history.map((squares, move) => {
-    let description = move > 0? 'Go to move #' + move : 'Go to game start';
+    const description = move > 0? 'Go to move #' + move : 'Go to game start';
 
     return (
     <li key={move}>
